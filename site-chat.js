@@ -71,23 +71,14 @@ async function converterCoordenadasParaEndereco(lat, lon) {
   const apiKey = "SUA_CHAVE_API";
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${apiKey}`;
 
-  
   try {
     const response = await fetch(url);
     const data = await response.json();
-
-    if (data.results && data.results.length > 0) {
-      const enderecoCompleto = data.results[0].formatted;
-      return enderecoCompleto;
-    } else {
-      console.warn("Nenhum endereço encontrado para essas coordenadas.");
-      return "Endereço não encontrado.";
-    }
+    return data.results[0].formatted;
   } catch (error) {
     console.error("Erro ao converter coordenadas:", error);
-    return "Erro ao buscar endereço.";
+    return null;
   }
-
 }
 
 function closeLoginPopup() {
