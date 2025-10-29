@@ -1,5 +1,4 @@
 /*js do site */
-/*js do site */
 
 // Dados de exemplo para as postagens
 const samplePosts = [
@@ -139,7 +138,7 @@ function renderPosts() {
 }
 
 // Função para mascarar CEP
-function mascararCEP(input) {
+/*function mascararCEP(input) {
   let value = input.value.replace(/\D/g, '');
   if (value.length > 5) {
     value = value.substring(0, 5) + '-' + value.substring(5, 8);
@@ -152,7 +151,7 @@ function handleKeyPress(event) {
   if (event.key === 'Enter') {
     event.preventDefault();
   }
-}
+}*/
 
 // Função para adicionar nova postagem
 document
@@ -164,7 +163,7 @@ document
     const category = document.getElementById("action-category").value;
     const description = document.getElementById("action-description").value;
     const location = document.getElementById("action-location").value;
-    const cep = document.getElementById("action-locationCEP").value;
+   // const cep = document.getElementById("action-locationCEP").value;
     const imageUrl = document.getElementById("action-image").value;
     const imageFile = document.getElementById("action-image-file").files[0];
 
@@ -184,7 +183,7 @@ document
 
     if (title && category && description) {
       // Combinar CEP com localização se ambos existirem
-      let finalLocation = location;
+      /*let finalLocation = location;
       if (cep && location) {
         finalLocation = `${location} - CEP: ${cep}`;
       } else if (cep) {
@@ -193,7 +192,7 @@ document
         finalLocation = location;
       } else {
         finalLocation = "Local não informado";
-      }
+      }*/
 
       const newPost = {
         title,
@@ -270,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
 /* js do chat */
 
 // Chatbot Script
@@ -429,3 +429,44 @@ function generateBotReply(userMessage) {
 
   return "Desculpe, ainda estou aprendendo a responder isso. Pode reformular sua pergunta?";
 }
+
+// Adicionar event listener para fechar chat com a tecla Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && chatActive) {
+    closeChat();
+  }
+});
+
+// Garantir que o botão de fechar funcione corretamente em todos os dispositivos
+document.getElementById("closeBtn").addEventListener("click", closeChat);
+
+/* Funcionalidade do Popup do Clima */
+
+// Elementos do clima
+const weatherBtn = document.getElementById("weatherBtn");
+const weatherPopup = document.getElementById("weatherPopup");
+const closeWeather = document.getElementById("closeWeather");
+
+// Abrir popup do clima
+weatherBtn.addEventListener("click", function() {
+  weatherPopup.style.display = "block";
+});
+
+// Fechar popup do clima
+closeWeather.addEventListener("click", function() {
+  weatherPopup.style.display = "none";
+});
+
+// Fechar popup ao clicar fora
+window.addEventListener("click", function(event) {
+  if (event.target === weatherPopup) {
+    weatherPopup.style.display = "none";
+  }
+});
+
+// Fechar popup com a tecla Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && weatherPopup.style.display === 'block') {
+    weatherPopup.style.display = "none";
+  }
+});
