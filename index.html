@@ -1,4 +1,3 @@
-<!-- parte do html do site -->
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -105,9 +104,23 @@
       </div>
     </section>
 
-    <!-- Elfsight Weather | Untitled Weather -->
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-2f6dc5b7-6fd6-4f66-b948-b0dd462dee70" data-elfsight-app-lazy></div>
+    <!-- Botão para abrir o popup do clima -->
+    <button id="weatherBtn" class="weather-btn">
+      <i class="fas fa-cloud-sun"></i> Clima
+    </button>
+
+    <!-- Popup do clima -->
+    <div id="weatherPopup" class="weather-popup">
+      <div class="weather-popup-content">
+        <span class="close-weather" id="closeWeather">×</span>
+        <h3>Previsão do Tempo</h3>
+        <div class="weather-content">
+          <!-- Widget do clima Elfsight dentro do popup -->
+          <script src="https://elfsightcdn.com/platform.js" async></script>
+          <div class="elfsight-app-2f6dc5b7-6fd6-4f66-b948-b0dd462dee70" data-elfsight-app-lazy></div>
+        </div>
+      </div>
+    </div>
 
     <section class="user-input-section" id="share">
       <div class="container">
@@ -144,7 +157,7 @@
                 placeholder="Descreva detalhadamente o problema ambiental..."
               ></textarea>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
               <label for="action-location">CEP (opcional)</label>
               <input
                 type="text"
@@ -155,7 +168,7 @@
                 oninput="mascararCEP(this)"
                 onkeypress="handleKeyPress(event)"
               />
-            </div>
+            </div>-->
             <div class="form-group">
               <label for="action-location">Localização (opcional)</label>
               <input
