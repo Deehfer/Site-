@@ -28,6 +28,7 @@ header {
   color: var(--white);
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: fixed;
 }
 
 .container {
@@ -50,7 +51,6 @@ nav {
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
-  display: flex;
   align-items: center;
 }
 
@@ -68,6 +68,46 @@ nav {
   justify-content: flex-end;
   transition: none;
   z-index: auto;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.close-menu {
+  align-self: auto;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: var(--light-green);
+  cursor: pointer;
+  display: none;
 }
 
 .nav-links li {
@@ -91,6 +131,17 @@ nav {
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1001;
+}
+
+.login {
+  background-color: var(--light-green);
+  color: var(--dark-green);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .hero {
@@ -319,6 +370,11 @@ footer {
     right: 0;
   }
 
+  .close-menu {
+    display: block;
+    align-self: auto;
+    margin-bottom: 10px;
+  }
   .nav-links li {
     margin: 1.5rem 0;
   }
@@ -362,14 +418,44 @@ body {
   height: 100vh;
   margin: 0;
   display: grid;
-  justify-content: end;
   align-items: end;
 }
 
+.menu-toggle {
+  display: none;
+
+  width: 50px;
+  height: 50px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background-color: green;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    background-color: green;
+    color: white; /* Cor do ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+}
+
 #openChatBtn {
-  width: 90px;
-  height: 90px;
-  padding: 0;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
   background: linear-gradient(
     to right,
     var(--button-color-start),
@@ -383,6 +469,10 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s ease;
+  z-index: 1;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 #openChatBtn img {
