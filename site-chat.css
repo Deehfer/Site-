@@ -8,6 +8,13 @@
   --sky-blue: #87ceeb;
   --white: #ffffff;
   --light-gray: #f5f5f5;
+  --primary-color: #2e8b57;
+  --secondary-color: #006400;
+  --button-color-start: #2e8b57;
+  --button-color-end: #006400;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --user-message-color: #e1ffc7;
+  --bot-message-color: #f0f0f0;
 }
 
 * {
@@ -21,6 +28,7 @@ body {
   background-color: var(--light-gray);
   color: #333;
   line-height: 1.6;
+  padding-top: 80px; /* Compensa a altura do header fixo */
 }
 
 header {
@@ -28,7 +36,11 @@ header {
   color: var(--white);
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Garante que o header fique acima de outros elementos */
 }
 
 .container {
@@ -349,7 +361,103 @@ footer {
   font-size: 0.9rem;
 }
 
+/* Estilos para o botão e popup do clima */
+.weather-btn {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 999;
+}
+
+.weather-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.weather-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.weather-popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.weather-popup h3 {
+  margin-bottom: 20px;
+  color: var(--dark-green);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.close-weather {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-weather:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.weather-content {
+  text-align: center;
+}
+
+/* Estilização do widget Elfsight dentro do popup */
+.elfsight-app-2f6dc5b7-6fd6-4f66-b948-b0dd462dee70 {
+  min-height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
+  body {
+    padding-top: 70px; /* Ajuste para mobile */
+  }
+  
   .burger-menu-icon {
     display: block;
   }
@@ -395,6 +503,18 @@ footer {
   .user-input-section,
   .community-section {
     padding: 4rem 0;
+  }
+  
+  .weather-btn {
+    top: 80px;
+    right: 10px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .weather-popup-content {
+    width: 95%;
+    padding: 20px;
   }
 }
 
@@ -469,7 +589,7 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s ease;
-  z-index: 1;
+  z-index: 999; /* Garante que fique acima de outros elementos */
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -492,7 +612,7 @@ body {
 #chatModal {
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 1001; /* Acima do header e outros elementos */
   left: 0;
   top: 0;
   width: 100%;
@@ -614,6 +734,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  z-index: 1002; /* Garante que fique acima do conteúdo do chat */
 }
 
 #closeBtn:hover {
@@ -671,12 +792,20 @@ body {
   font-weight: bold;
 }
 
-/* Responsividade */
-@media (max-width: 480px) {
+/* Responsividade do chat - Correções para mobile */
+@media (max-width: 768px) {
   #chatBox {
     width: 95%;
-    margin: 20px auto;
+    height: 80vh;
+    margin: 10vh auto;
     padding: 15px;
+  }
+  
+  #closeBtn {
+    top: 5px;
+    right: 10px;
+    z-index: 1002;
+    background: rgba(255, 255, 255, 0.9);
   }
 
   .message {
@@ -686,5 +815,12 @@ body {
 
   #messages {
     height: 250px;
+  }
+  
+  /* Garantir que o botão do chat fique acessível em mobile */
+  #openChatBtn {
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
   }
 }
