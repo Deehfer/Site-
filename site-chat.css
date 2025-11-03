@@ -518,9 +518,8 @@ footer {
   }
 }
 
-/*parte doo css do chat */
-
-:root {
+/* chat */
+/* :root {
   background: transparent;
 }
 
@@ -563,7 +562,7 @@ body {
     cursor: pointer;
     z-index: 1000;
     background-color: green;
-    color: white; /* Cor do ícone */
+    color: white; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -589,7 +588,7 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s ease;
-  z-index: 999; /* Garante que fique acima de outros elementos */
+  z-index: 999; 
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -612,7 +611,7 @@ body {
 #chatModal {
   display: none;
   position: fixed;
-  z-index: 1001; /* Acima do header e outros elementos */
+  z-index: 1001; 
   left: 0;
   top: 0;
   width: 100%;
@@ -734,7 +733,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  z-index: 1002; /* Garante que fique acima do conteúdo do chat */
+  z-index: 1002; 
 }
 
 #closeBtn:hover {
@@ -792,7 +791,6 @@ body {
   font-weight: bold;
 }
 
-/* Responsividade do chat - Correções para mobile */
 @media (max-width: 768px) {
   #chatBox {
     width: 95%;
@@ -817,10 +815,9 @@ body {
     height: 250px;
   }
   
-  /* Garantir que o botão do chat fique acessível em mobile */
   #openChatBtn {
     bottom: 20px;
     right: 20px;
     z-index: 999;
   }
-}
+} */

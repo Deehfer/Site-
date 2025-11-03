@@ -227,226 +227,6 @@ function clearAllPosts() {
   }
 }
 
-/* js do chat */
-
-// Chatbot Script
-// Elementos DOM
-let modal, userInput, messagesContainer, typingIndicator, inactivityMessage;
-
-// Variáveis de estado
-let inactivityTimeout;
-let chatActive = false;
-
-// Inicializar elementos do chat
-function initializeChat() {
-  modal = document.getElementById("chatModal");
-  userInput = document.getElementById("user-input");
-  messagesContainer = document.getElementById("messages");
-  typingIndicator = document.getElementById("typingIndicator");
-  inactivityMessage = document.getElementById("inactivityMessage");
-
-  // Configurar event listeners do chat
-  if (document.getElementById("openChatBtn")) {
-    document.getElementById("openChatBtn").addEventListener("click", openChat);
-  }
-
-  if (document.getElementById("closeBtn")) {
-    document.getElementById("closeBtn").addEventListener("click", closeChat);
-  }
-
-  if (document.getElementById("sendBtn")) {
-    document.getElementById("sendBtn").addEventListener("click", sendMessage);
-  }
-
-  // Fechar chat ao clicar fora da área do chat
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeChat();
-      }
-    });
-  }
-
-  // Event listeners para interação do usuário
-  if (userInput) {
-    userInput.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-      // Reiniciar timer a cada interação
-      startInactivityTimer();
-    });
-
-    userInput.addEventListener("input", function () {
-      startInactivityTimer();
-    });
-  }
-}
-
-// Abrir chat
-function openChat() {
-  if (!modal) return;
-  
-  modal.style.display = "block";
-  chatActive = true;
-  
-  if (userInput) {
-    userInput.focus();
-  }
-
-  // Limpar mensagens anteriores
-  if (messagesContainer) {
-    messagesContainer.innerHTML = "";
-  }
-
-  // Mensagens de boas-vindas
-  addMessage(
-    "Olá! Sou o Caquinho, seu assistente virtual! Como posso ajudar você hoje?",
-    "bot"
-  );
-  addMessage(
-    "Caso não precisar mais da minha ajuda, digite 'sair' para finalizar.",
-    "bot"
-  );
-
-  // Iniciar timer de inatividade
-  startInactivityTimer();
-}
-
-function closeChat() {
-  if (!modal) return;
-  
-  modal.style.display = "none";
-  
-  if (messagesContainer) {
-    messagesContainer.innerHTML = "";
-  }
-  
-  if (userInput) {
-    userInput.value = "";
-  }
-  
-  chatActive = false;
-  clearTimeout(inactivityTimeout);
-  closeInactivityMessage();
-}
-
-// Timer de inatividade
-function startInactivityTimer() {
-  clearTimeout(inactivityTimeout);
-  inactivityTimeout = setTimeout(() => {
-    if (chatActive) {
-      showInactivityMessage();
-
-      // Fechar automaticamente após mostrar o aviso
-      setTimeout(() => {
-        if (chatActive) {
-          closeChat();
-        }
-      }, 30000);
-    }
-  }, 30000); // 30 segundos de inatividade
-}
-
-function showInactivityMessage() {
-  if (inactivityMessage) {
-    inactivityMessage.style.display = "block";
-  }
-}
-
-function closeInactivityMessage() {
-  if (inactivityMessage) {
-    inactivityMessage.style.display = "none";
-  }
-}
-
-// Enviar mensagem
-function sendMessage() {
-  if (!userInput) return;
-  
-  const message = userInput.value.trim();
-  if (!message) return;
-
-  addMessage(message, "user");
-  userInput.value = "";
-
-  // Mostrar indicador de digitação
-  if (typingIndicator) {
-    typingIndicator.style.display = "block";
-  }
-
-  // Simular resposta do bot
-  setTimeout(() => {
-    const reply = generateBotReply(message);
-    
-    if (typingIndicator) {
-      typingIndicator.style.display = "none";
-    }
-    
-    addMessage(reply, "bot");
-
-    // Verificar se o usuário quer sair
-    if (message.toLowerCase().includes("sair")) {
-      setTimeout(() => {
-        closeChat();
-      }, 2000);
-    }
-  }, 1000 + Math.random() * 1000); // Tempo de resposta variável
-
-  // Reiniciar timer de inatividade
-  startInactivityTimer();
-}
-
-// Adicionar mensagem ao chat
-function addMessage(text, sender) {
-  if (!messagesContainer) return;
-  
-  const messageDiv = document.createElement("div");
-  messageDiv.className = `message ${sender}`;
-  messageDiv.textContent = text;
-  messagesContainer.appendChild(messageDiv);
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-// Gerar resposta do bot
-function generateBotReply(userMessage) {
-  const lowerMessage = userMessage.toLowerCase();
-
-  if (lowerMessage.includes("ajuda") || lowerMessage.includes("help")) {
-    return "Claro! Estou aqui para ajudar. Posso ajudar com:\n- Informações sobre problemas ambientais\n- Como reportar ocorrências\n- Dicas de sustentabilidade\nO que você precisa?";
-  }
-  
-  if (lowerMessage.includes("sair") || lowerMessage.includes("exit") || lowerMessage.includes("tchau")) {
-    return "Até mais! Foi bom conversar com você. Volte sempre que precisar!";
-  }
-  
-  if (lowerMessage.includes("olá") || lowerMessage.includes("oi") || lowerMessage.includes("ola") || lowerMessage.includes("hello")) {
-    return "Olá! Como posso ajudá-lo hoje?";
-  }
-  
-  if (lowerMessage.includes("nome")) {
-    return "Meu nome é Caquinho! Sou seu assistente virtual especializado em questões ambientais.";
-  }
-  
-  if (lowerMessage.includes("obrigado") || lowerMessage.includes("obrigada") || lowerMessage.includes("thanks")) {
-    return "De nada! Estou aqui para ajudar. Fico feliz em poder contribuir!";
-  }
-  
-  if (lowerMessage.includes("poluição") || lowerMessage.includes("poluicao")) {
-    return "A poluição é um grande problema ambiental. Você pode reportar casos de poluição do ar, água ou solo através do formulário 'Reportar Tickets' no site.";
-  }
-  
-  if (lowerMessage.includes("denúncia") || lowerMessage.includes("denuncia") || lowerMessage.includes("reportar")) {
-    return "Para fazer uma denúncia ambiental, vá até a seção 'Reportar Tickets' e preencha o formulário com:\n- Localização\n- Tipo do problema\n- Descrição detalhada\n- Fotos (se possível)";
-  }
-  
-  if (lowerMessage.includes("sustentabilidade") || lowerMessage.includes("sustentavel")) {
-    return "Algumas dicas de sustentabilidade:\n- Reduza o consumo de plástico\n- Separe o lixo para reciclagem\n- Economize água e energia\n- Use transporte sustentável\n- Plante árvores";
-  }
-
-  return "Desculpe, ainda estou aprendendo a responder isso. Pode reformular sua pergunta ou digitar 'ajuda' para ver o que posso fazer por você!";
-}
-
 /* Funcionalidade do Popup do Clima */
 
 // Elementos do clima
@@ -537,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Inicializar chat
-  initializeChat();
+  //initializeChat();
 
   // Inicializar clima
   initializeWeather();
@@ -557,3 +337,223 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+// /* js do chat */
+// // Chatbot Script
+// // Elementos DOM
+// let modal, userInput, messagesContainer, typingIndicator, inactivityMessage;
+
+// // Variáveis de estado
+// let inactivityTimeout;
+// let chatActive = false;
+
+// // Inicializar elementos do chat
+// function initializeChat() {
+//   modal = document.getElementById("chatModal");
+//   userInput = document.getElementById("user-input");
+//   messagesContainer = document.getElementById("messages");
+//   typingIndicator = document.getElementById("typingIndicator");
+//   inactivityMessage = document.getElementById("inactivityMessage");
+
+//   // Configurar event listeners do chat
+//   if (document.getElementById("openChatBtn")) {
+//     document.getElementById("openChatBtn").addEventListener("click", openChat);
+//   }
+
+//   if (document.getElementById("closeBtn")) {
+//     document.getElementById("closeBtn").addEventListener("click", closeChat);
+//   }
+
+//   if (document.getElementById("sendBtn")) {
+//     document.getElementById("sendBtn").addEventListener("click", sendMessage);
+//   }
+
+//   // Fechar chat ao clicar fora da área do chat
+//   if (modal) {
+//     modal.addEventListener("click", (e) => {
+//       if (e.target === modal) {
+//         closeChat();
+//       }
+//     });
+//   }
+
+//   // Event listeners para interação do usuário
+//   if (userInput) {
+//     userInput.addEventListener("keydown", function (event) {
+//       if (event.key === "Enter") {
+//         sendMessage();
+//       }
+//       // Reiniciar timer a cada interação
+//       startInactivityTimer();
+//     });
+
+//     userInput.addEventListener("input", function () {
+//       startInactivityTimer();
+//     });
+//   }
+// }
+
+// // Abrir chat
+// function openChat() {
+//   if (!modal) return;
+  
+//   modal.style.display = "block";
+//   chatActive = true;
+  
+//   if (userInput) {
+//     userInput.focus();
+//   }
+
+//   // Limpar mensagens anteriores
+//   if (messagesContainer) {
+//     messagesContainer.innerHTML = "";
+//   }
+
+//   // Mensagens de boas-vindas
+//   addMessage(
+//     "Olá! Sou o Caquinho, seu assistente virtual! Como posso ajudar você hoje?",
+//     "bot"
+//   );
+//   addMessage(
+//     "Caso não precisar mais da minha ajuda, digite 'sair' para finalizar.",
+//     "bot"
+//   );
+
+//   // Iniciar timer de inatividade
+//   startInactivityTimer();
+// }
+
+// function closeChat() {
+//   if (!modal) return;
+  
+//   modal.style.display = "none";
+  
+//   if (messagesContainer) {
+//     messagesContainer.innerHTML = "";
+//   }
+  
+//   if (userInput) {
+//     userInput.value = "";
+//   }
+  
+//   chatActive = false;
+//   clearTimeout(inactivityTimeout);
+//   closeInactivityMessage();
+// }
+
+// // Timer de inatividade
+// function startInactivityTimer() {
+//   clearTimeout(inactivityTimeout);
+//   inactivityTimeout = setTimeout(() => {
+//     if (chatActive) {
+//       showInactivityMessage();
+
+//       // Fechar automaticamente após mostrar o aviso
+//       setTimeout(() => {
+//         if (chatActive) {
+//           closeChat();
+//         }
+//       }, 30000);
+//     }
+//   }, 30000); // 30 segundos de inatividade
+// }
+
+// function showInactivityMessage() {
+//   if (inactivityMessage) {
+//     inactivityMessage.style.display = "block";
+//   }
+// }
+
+// function closeInactivityMessage() {
+//   if (inactivityMessage) {
+//     inactivityMessage.style.display = "none";
+//   }
+// }
+
+// // Enviar mensagem
+// function sendMessage() {
+//   if (!userInput) return;
+  
+//   const message = userInput.value.trim();
+//   if (!message) return;
+
+//   addMessage(message, "user");
+//   userInput.value = "";
+
+//   // Mostrar indicador de digitação
+//   if (typingIndicator) {
+//     typingIndicator.style.display = "block";
+//   }
+
+//   // Simular resposta do bot
+//   setTimeout(() => {
+//     const reply = generateBotReply(message);
+    
+//     if (typingIndicator) {
+//       typingIndicator.style.display = "none";
+//     }
+    
+//     addMessage(reply, "bot");
+
+//     // Verificar se o usuário quer sair
+//     if (message.toLowerCase().includes("sair")) {
+//       setTimeout(() => {
+//         closeChat();
+//       }, 2000);
+//     }
+//   }, 1000 + Math.random() * 1000); // Tempo de resposta variável
+
+//   // Reiniciar timer de inatividade
+//   startInactivityTimer();
+// }
+
+// // Adicionar mensagem ao chat
+// function addMessage(text, sender) {
+//   if (!messagesContainer) return;
+  
+//   const messageDiv = document.createElement("div");
+//   messageDiv.className = `message ${sender}`;
+//   messageDiv.textContent = text;
+//   messagesContainer.appendChild(messageDiv);
+//   messagesContainer.scrollTop = messagesContainer.scrollHeight;
+// }
+
+// // Gerar resposta do bot
+// function generateBotReply(userMessage) {
+//   const lowerMessage = userMessage.toLowerCase();
+
+//   if (lowerMessage.includes("ajuda") || lowerMessage.includes("help")) {
+//     return "Claro! Estou aqui para ajudar. Posso ajudar com:\n- Informações sobre problemas ambientais\n- Como reportar ocorrências\n- Dicas de sustentabilidade\nO que você precisa?";
+//   }
+  
+//   if (lowerMessage.includes("sair") || lowerMessage.includes("exit") || lowerMessage.includes("tchau")) {
+//     return "Até mais! Foi bom conversar com você. Volte sempre que precisar!";
+//   }
+  
+//   if (lowerMessage.includes("olá") || lowerMessage.includes("oi") || lowerMessage.includes("ola") || lowerMessage.includes("hello")) {
+//     return "Olá! Como posso ajudá-lo hoje?";
+//   }
+  
+//   if (lowerMessage.includes("nome")) {
+//     return "Meu nome é Caquinho! Sou seu assistente virtual especializado em questões ambientais.";
+//   }
+  
+//   if (lowerMessage.includes("obrigado") || lowerMessage.includes("obrigada") || lowerMessage.includes("thanks")) {
+//     return "De nada! Estou aqui para ajudar. Fico feliz em poder contribuir!";
+//   }
+  
+//   if (lowerMessage.includes("poluição") || lowerMessage.includes("poluicao")) {
+//     return "A poluição é um grande problema ambiental. Você pode reportar casos de poluição do ar, água ou solo através do formulário 'Reportar Tickets' no site.";
+//   }
+  
+//   if (lowerMessage.includes("denúncia") || lowerMessage.includes("denuncia") || lowerMessage.includes("reportar")) {
+//     return "Para fazer uma denúncia ambiental, vá até a seção 'Reportar Tickets' e preencha o formulário com:\n- Localização\n- Tipo do problema\n- Descrição detalhada\n- Fotos (se possível)";
+//   }
+  
+//   if (lowerMessage.includes("sustentabilidade") || lowerMessage.includes("sustentavel")) {
+//     return "Algumas dicas de sustentabilidade:\n- Reduza o consumo de plástico\n- Separe o lixo para reciclagem\n- Economize água e energia\n- Use transporte sustentável\n- Plante árvores";
+//   }
+
+//   return "Desculpe, ainda estou aprendendo a responder isso. Pode reformular sua pergunta ou digitar 'ajuda' para ver o que posso fazer por você!";
+// }
