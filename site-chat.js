@@ -338,222 +338,98 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// chat
+document.addEventListener("DOMContentLoaded", () => {
 
-// /* js do chat */
-// // Chatbot Script
-// // Elementos DOM
-// let modal, userInput, messagesContainer, typingIndicator, inactivityMessage;
+  const chatBox = document.getElementById("gg-help-chat");
+  const toggleButton = document.getElementById("gg-help-button");
+  const minimizeButton = document.getElementById("gg-help-minimize-btn");
+  const sendButton = document.getElementById("gg-help-send");
+  const inputField = document.getElementById("gg-help-input");
+  const chatBody = document.getElementById("gg-help-body");
 
-// // Variáveis de estado
-// let inactivityTimeout;
-// let chatActive = false;
+  toggleButton.addEventListener("click", () => {
+    chatBox.style.display = "flex";
+    toggleButton.style.display = "none";
+    toggleButton.classList.remove("blink");
+  });
 
-// // Inicializar elementos do chat
-// function initializeChat() {
-//   modal = document.getElementById("chatModal");
-//   userInput = document.getElementById("user-input");
-//   messagesContainer = document.getElementById("messages");
-//   typingIndicator = document.getElementById("typingIndicator");
-//   inactivityMessage = document.getElementById("inactivityMessage");
-
-//   // Configurar event listeners do chat
-//   if (document.getElementById("openChatBtn")) {
-//     document.getElementById("openChatBtn").addEventListener("click", openChat);
-//   }
-
-//   if (document.getElementById("closeBtn")) {
-//     document.getElementById("closeBtn").addEventListener("click", closeChat);
-//   }
-
-//   if (document.getElementById("sendBtn")) {
-//     document.getElementById("sendBtn").addEventListener("click", sendMessage);
-//   }
-
-//   // Fechar chat ao clicar fora da área do chat
-//   if (modal) {
-//     modal.addEventListener("click", (e) => {
-//       if (e.target === modal) {
-//         closeChat();
-//       }
-//     });
-//   }
-
-//   // Event listeners para interação do usuário
-//   if (userInput) {
-//     userInput.addEventListener("keydown", function (event) {
-//       if (event.key === "Enter") {
-//         sendMessage();
-//       }
-//       // Reiniciar timer a cada interação
-//       startInactivityTimer();
-//     });
-
-//     userInput.addEventListener("input", function () {
-//       startInactivityTimer();
-//     });
-//   }
-// }
-
-// // Abrir chat
-// function openChat() {
-//   if (!modal) return;
+  minimizeButton.addEventListener("click", ggMinimizeChat);
   
-//   modal.style.display = "block";
-//   chatActive = true;
-  
-//   if (userInput) {
-//     userInput.focus();
-//   }
+  function ggMinimizeChat() {
+    chatBox.classList.add("gg-help-hide");
+    setTimeout(() => {
+      chatBox.style.display = "none";
+      chatBox.classList.remove("gg-help-hide");
+      toggleButton.style.display = "flex";
+    }, 0); // 300
+  }
 
-//   // Limpar mensagens anteriores
-//   if (messagesContainer) {
-//     messagesContainer.innerHTML = "";
-//   }
+  const scrollToBottom = () => {
+    chatBody.scrollTop = chatBody.scrollHeight;
+  };
 
-//   // Mensagens de boas-vindas
-//   addMessage(
-//     "Olá! Sou o Caquinho, seu assistente virtual! Como posso ajudar você hoje?",
-//     "bot"
-//   );
-//   addMessage(
-//     "Caso não precisar mais da minha ajuda, digite 'sair' para finalizar.",
-//     "bot"
-//   );
+  const sendMessage = () => {
+    const message = inputField.value.trim();
+    if (!message) return;
 
-//   // Iniciar timer de inatividade
-//   startInactivityTimer();
-// }
+    const userMsg = document.createElement("div");
+    userMsg.className = "gg-help-msg-user";
+    userMsg.textContent = message;
+    chatBody.appendChild(userMsg);
+    scrollToBottom();
 
-// function closeChat() {
-//   if (!modal) return;
-  
-//   modal.style.display = "none";
-  
-//   if (messagesContainer) {
-//     messagesContainer.innerHTML = "";
-//   }
-  
-//   if (userInput) {
-//     userInput.value = "";
-//   }
-  
-//   chatActive = false;
-//   clearTimeout(inactivityTimeout);
-//   closeInactivityMessage();
-// }
+    const typingIndicator = document.createElement("div");
+    typingIndicator.className = "gg-help-typing dot-loader";
+    typingIndicator.innerHTML = `Pensando<span>.</span><span>.</span><span>.</span>`;
+    chatBody.appendChild(typingIndicator);
+    scrollToBottom();
 
-// // Timer de inatividade
-// function startInactivityTimer() {
-//   clearTimeout(inactivityTimeout);
-//   inactivityTimeout = setTimeout(() => {
-//     if (chatActive) {
-//       showInactivityMessage();
+    const chatId = sessionStorage.getItem("chatId") || "chat_" + Math.random().toString(36).substr(2, 9);
+    sessionStorage.setItem("chatId", chatId);
 
-//       // Fechar automaticamente após mostrar o aviso
-//       setTimeout(() => {
-//         if (chatActive) {
-//           closeChat();
-//         }
-//       }, 30000);
-//     }
-//   }, 30000); // 30 segundos de inatividade
-// }
+    fetch('http://localhost:5678/webhook/94b8060b-79fa-46f1-a013-afcb8ee81379/chat', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: chatId,
+        chatInput: message,
+        route: "general"
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setTimeout(() => {
+        typingIndicator.remove();
+        const botMsg = document.createElement("div");
+        botMsg.className = "gg-help-msg-bot";
+        botMsg.innerHTML = marked.parse(data.output || "Desculpe, não entendi.");
+        chatBody.appendChild(botMsg);
+        scrollToBottom();
+        if (chatBox.style.display === "none") {
+          toggleButton.classList.add("blink");
+        }
+      }, 1000);
+    })
+    .catch(err => {
+      typingIndicator.remove();
+      console.error("Erro:", err);
+      const errorMsg = document.createElement("div");
+      errorMsg.className = "gg-help-msg-bot";
+      errorMsg.innerHTML = "<strong>Ops!</strong> Não consegui me conectar. Tente novamente.";
+      chatBody.appendChild(errorMsg);
+      scrollToBottom();
+    });
 
-// function showInactivityMessage() {
-//   if (inactivityMessage) {
-//     inactivityMessage.style.display = "block";
-//   }
-// }
+    inputField.value = "";
+  };
 
-// function closeInactivityMessage() {
-//   if (inactivityMessage) {
-//     inactivityMessage.style.display = "none";
-//   }
-// }
+  sendButton.addEventListener("click", sendMessage);
+  inputField.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 
-// // Enviar mensagem
-// function sendMessage() {
-//   if (!userInput) return;
-  
-//   const message = userInput.value.trim();
-//   if (!message) return;
-
-//   addMessage(message, "user");
-//   userInput.value = "";
-
-//   // Mostrar indicador de digitação
-//   if (typingIndicator) {
-//     typingIndicator.style.display = "block";
-//   }
-
-//   // Simular resposta do bot
-//   setTimeout(() => {
-//     const reply = generateBotReply(message);
-    
-//     if (typingIndicator) {
-//       typingIndicator.style.display = "none";
-//     }
-    
-//     addMessage(reply, "bot");
-
-//     // Verificar se o usuário quer sair
-//     if (message.toLowerCase().includes("sair")) {
-//       setTimeout(() => {
-//         closeChat();
-//       }, 2000);
-//     }
-//   }, 1000 + Math.random() * 1000); // Tempo de resposta variável
-
-//   // Reiniciar timer de inatividade
-//   startInactivityTimer();
-// }
-
-// // Adicionar mensagem ao chat
-// function addMessage(text, sender) {
-//   if (!messagesContainer) return;
-  
-//   const messageDiv = document.createElement("div");
-//   messageDiv.className = `message ${sender}`;
-//   messageDiv.textContent = text;
-//   messagesContainer.appendChild(messageDiv);
-//   messagesContainer.scrollTop = messagesContainer.scrollHeight;
-// }
-
-// // Gerar resposta do bot
-// function generateBotReply(userMessage) {
-//   const lowerMessage = userMessage.toLowerCase();
-
-//   if (lowerMessage.includes("ajuda") || lowerMessage.includes("help")) {
-//     return "Claro! Estou aqui para ajudar. Posso ajudar com:\n- Informações sobre problemas ambientais\n- Como reportar ocorrências\n- Dicas de sustentabilidade\nO que você precisa?";
-//   }
-  
-//   if (lowerMessage.includes("sair") || lowerMessage.includes("exit") || lowerMessage.includes("tchau")) {
-//     return "Até mais! Foi bom conversar com você. Volte sempre que precisar!";
-//   }
-  
-//   if (lowerMessage.includes("olá") || lowerMessage.includes("oi") || lowerMessage.includes("ola") || lowerMessage.includes("hello")) {
-//     return "Olá! Como posso ajudá-lo hoje?";
-//   }
-  
-//   if (lowerMessage.includes("nome")) {
-//     return "Meu nome é Caquinho! Sou seu assistente virtual especializado em questões ambientais.";
-//   }
-  
-//   if (lowerMessage.includes("obrigado") || lowerMessage.includes("obrigada") || lowerMessage.includes("thanks")) {
-//     return "De nada! Estou aqui para ajudar. Fico feliz em poder contribuir!";
-//   }
-  
-//   if (lowerMessage.includes("poluição") || lowerMessage.includes("poluicao")) {
-//     return "A poluição é um grande problema ambiental. Você pode reportar casos de poluição do ar, água ou solo através do formulário 'Reportar Tickets' no site.";
-//   }
-  
-//   if (lowerMessage.includes("denúncia") || lowerMessage.includes("denuncia") || lowerMessage.includes("reportar")) {
-//     return "Para fazer uma denúncia ambiental, vá até a seção 'Reportar Tickets' e preencha o formulário com:\n- Localização\n- Tipo do problema\n- Descrição detalhada\n- Fotos (se possível)";
-//   }
-  
-//   if (lowerMessage.includes("sustentabilidade") || lowerMessage.includes("sustentavel")) {
-//     return "Algumas dicas de sustentabilidade:\n- Reduza o consumo de plástico\n- Separe o lixo para reciclagem\n- Economize água e energia\n- Use transporte sustentável\n- Plante árvores";
-//   }
-
-//   return "Desculpe, ainda estou aprendendo a responder isso. Pode reformular sua pergunta ou digitar 'ajuda' para ver o que posso fazer por você!";
-// }
+});
