@@ -1,0 +1,192 @@
+{
+  "name": "AgenteSustentabilidade",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Você é um agente que ajudará o usuario de um sistemas de tickets ambientais, com foco em responder perguntas sobre questões ambientais e o auxiliar com o acompanhamento de tickets de ocorrencias.\n\nVocê sempre responderá em português do Brasil!\nNunca responda em Inglês\nCaso o usuário pergunte sobre tickets especificos que nao se encontram no retorno da API, não afirme que o ticket não existe, quero que nesse caso, fale a verdade:\nvocê é um agente feito com o intuito de alunos aprenderem como fazer um sistema, e só tem acesso aos chamados que foram adicionados no retorno de API uma mockada que voce tem acesso, os chamados adicionados vide site, são armazenados em localhost, e já que o sistema não dispoẽ de um backend para atualizar o retorno da API, você nao tem acesso a eles\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        32,
+        -80
+      ],
+      "id": "25e00c2c-0da4-4188-badd-3a9273d4d8e8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-maverick-17b-128e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        144
+      ],
+      "id": "964aa21b-6f0e-4f66-92a4-d550da508e5f",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "YuZqDvFIMZdtswlc",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        144
+      ],
+      "id": "ba154c57-858e-44bf-b0ed-aef058338554",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Recebe quantos usuarios estão online no momento",
+        "url": "https://68ff8675e02b16d1753e5522.mockapi.io/api/ai/onlineUsers",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        96,
+        144
+      ],
+      "id": "28aefe1d-a5dc-44e1-a0e5-7044e4a02f44",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Recebe dados de desmatamento dos paises da america latina",
+        "url": "https://68ff8675e02b16d1753e5522.mockapi.io/api/ai/desmatamento",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        144
+      ],
+      "id": "0dd86609-c319-410c-b3aa-c48bcf570673",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -384,
+        -80
+      ],
+      "id": "17e8496f-beef-49bc-a742-41af5494f789",
+      "name": "When chat message received",
+      "webhookId": "94b8060b-79fa-46f1-a013-afcb8ee81379"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Realiza uma requisição para a API para ver quais os chamados/tickets em aberto no sistema ",
+        "url": "http://69036bc3d0f10a340b242b8c.mockapi.io/api/ai/chamados",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        352,
+        144
+      ],
+      "id": "78d6f2a3-346a-4bac-ba82-a2b30e33cd48",
+      "name": "HTTP Request2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "71d9c08b-f05b-4050-8e74-6eafb54cf1c4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d7621dfd88515eb6c89c51f22706f681608eca0ace721d3792fc2712ee7f49c6"
+  },
+  "id": "I6YEglBsUQoHvgK9",
+  "tags": []
+}
