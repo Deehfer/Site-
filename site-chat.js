@@ -526,15 +526,53 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Formulário de login
-  const loginForm = document.getElementById("login-form");
-  if (loginForm) {
-    loginForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Funcionalidade de login em desenvolvimento!");
+    // Formulário de login
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+  loginForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const ra = document.getElementById("text").value;
+    const imageFile = document.getElementById("action-image-file").files[0];
+
+    if (!ra || !imageFile) {
+      alert("Por favor, preencha o RA e selecione uma imagem.");
+      return;
+    }
+
+    try {
+      // Criar FormData para enviar a imagem
+      const formData = new FormData();
+      formData.append("imagem", imageFile);
+
+      // Fazer requisição para a API de reconhecimento
+      const response = await fetch('http://localhost:8080/api/facial/reconhecer', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro no reconhecimento facial');
+      }
+
+      const resultado = await response.json();
+
+      // Verificar se o RA reconhecido coincide com o informado
+      if (resultado.ra === ra) {
+        alert("Login realizado com sucesso!");
+        // Redirecionar ou executar ações pós-login aqui
+      } else {
+        alert("Falha no login: RA não corresponde ao reconhecimento facial.");
+      }
+
+    } catch (error) {
+      console.error('Erro:', error);
+      alert("Erro durante o reconhecimento facial. Tente novamente.");
+    } finally {
       closeLoginPopup();
-    });
-  }
+    }
+  });
+}
 
   // Inicializar chat
   initializeChat();

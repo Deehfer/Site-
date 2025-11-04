@@ -44,12 +44,15 @@
     <span class="close-popup" onclick="closeLoginPopup()">×</span>
     <h2>Login</h2>
     <form id="login-form">
-      <label for="username">Usuário:</label>
-      <input type="text" id="username" name="username" required />
-
-      <label for="password">Senha:</label>
-      <input type="password" id="password" name="password" required />
-
+      <label for="ra">RA:</label>
+      <input type="text" id="ra" name="ra" required />
+      <label for="action-image-file">Login com reconhecimento facial (obrigatorio)</label>
+      <input
+        type="file"
+        id="action-image-file"
+        class="form-control"
+        accept="image/*"
+      />
       <button type="submit">Entrar</button>
     </form>
   </div>
