@@ -191,6 +191,7 @@ function setupFormListener() {
           category,
           description,
           location: finalLocation,
+          image: finalImageUrl,
           date: new Date().toLocaleDateString("pt-BR"),
         };
 
@@ -469,5 +470,6 @@ document.addEventListener("DOMContentLoaded", () => {
       sendMessage();
     }
   });
+
 
 });
