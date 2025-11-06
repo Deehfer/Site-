@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Connect</title>
-    <link rel="stylesheet" href="site-chat.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <nav>
-          <button class="menu-toggle" id="menu-toggle">
-            <i class="fas fa-bars"></i>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Connect</title>
+  <link rel="stylesheet" href="site-chat.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="logo">
+          <i class="fas fa-leaf"></i>
+          E-Connect
+        </div>
+
+        <ul class="nav-links">
+          <button class="close-menu" id="close-menu" aria-label="Fechar Menu">
+            X
           </button>
+          <li class="close-menu"></li>
+          <li><a href="#home">Início</a></li>
+          <li><a href="#features">Como Funciona</a></li>
+          <li><a href="#share">Reportar Tickets</a></li>
+          <li><a href="#community">Ocorrencias</a></li>
+          <li><a href="#about">Sobre nós</a></li>
+          <li><a href="#login">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-          <div class="logo">
-            <i class="fas fa-leaf"></i>
-            E-Connect
-          </div>
-
-          <ul class="nav-links">
-            <button class="close-menu" id="close-menu" aria-label="Fechar Menu">
-              X
-            </button>
-            <li class="close-menu"></li>
-            <li><a href="#home">Início</a></li>
-            <li><a href="#features">Como Funciona</a></li>
-            <li><a href="#share">Reportar Tickets</a></li>
-            <li><a href="#community">Ocorrencias</a></li>
-            <li><a href="#about">Sobre nós</a></li>
-            <li><a href="#login">Login</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <div id="loginPopup" class="popup-overlay" style="display: none;">
+  <div id="loginPopup" class="popup-overlay" style="display: none;">
     <div class="popup-content">
+      <span class="close-popup" onclick="closeLoginPopup()">×</span>
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
     <span class="close-popup" onclick="closeLoginPopup()">×</span>
     <h2>Login</h2>
     <form id="login-form">
@@ -56,257 +67,205 @@
       <button type="submit">Entrar</button>
     </form>
   </div>
-</div>
 
 
-    <section class="hero" id="home">
-      <div class="container">
-        <h1>Sistema de Tickets Ambientais</h1>
-        <p>
-          Bem-vindo ao E-connect sua rede de ação ambiental. Denuncie, acompanhe
-          e ajude a transformar alertas em soluções para um planeta mais seguro.
-        </p>
-        <a href="#share" class="btn">Compartilhe sua Denuncia</a>
-      </div>
-    </section>
+  <section class="hero" id="home">
+    <div class="container">
+      <h1>Sistema de Tickets Ambientais</h1>
+      <p>
+        Bem-vindo ao E-connect sua rede de ação ambiental. Denuncie, acompanhe
+        e ajude a transformar alertas em soluções para um planeta mais seguro.
+      </p>
+      <a href="#share" class="btn">Compartilhe sua Denuncia</a>
+    </div>
+  </section>
 
-    <section class="features" id="features">
-      <div class="container">
-        <h2 class="section-title">Como Funciona</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">
-              <i class="fas fa-edit"></i>
-            </div>
-            <h3>Compartilhe</h3>
-            <p>
-              Divulgue casos ambientais e fortaleça a rede de proteção coletiva.
-            </p>
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Como Funciona</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-edit"></i>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>Denuncie</h3>
-            <p>
-              Identificou um problema ambiental? Registre aqui e ajude a
-              proteger o planeta.
-            </p>
+          <h3>Compartilhe</h3>
+          <p>
+            Divulgue casos ambientais e fortaleça a rede de proteção coletiva.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Contribua</h3>
-            <p>
-              Tem uma ideia ou solução? Contribua e ajude a transformar
-              realidades.
-            </p>
+          <h3>Denuncie</h3>
+          <p>
+            Identificou um problema ambiental? Registre aqui e ajude a
+            proteger o planeta.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
           </div>
+          <h3>Contribua</h3>
+          <p>
+            Tem uma ideia ou solução? Contribua e ajude a transformar
+            realidades.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Botão para abrir o popup do clima -->
-    <button id="weatherBtn" class="weather-btn">
-      <i class="fas fa-cloud-sun"></i> Clima
+  <!-- Botão para abrir o popup do clima -->
+  <button id="weatherBtn" class="weather-btn">
+    <i class="fas fa-cloud-sun"></i> Clima
+  </button>
+
+  <!-- Popup do clima -->
+  <div id="weatherPopup" class="weather-popup">
+    <div class="weather-popup-content">
+      <span class="close-weather" id="closeWeather">×</span>
+      <h3>Previsão do Tempo</h3>
+      <div class="weather-content">
+        <!-- Widget do clima Elfsight dentro do popup -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-2f6dc5b7-6fd6-4f66-b948-b0dd462dee70" data-elfsight-app-lazy></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="user-input-section" id="share">
+    <div class="container">
+      <h2 class="section-title">Reporte Problemas ou Sugestões Ambientais</h2>
+      <div class="input-form">
+        <form id="sustainability-form">
+          <div class="form-group">
+            <label for="action-title">Abertura de Ticket Ambiental</label>
+            <input type="text" id="action-title" class="form-control"
+              placeholder="Ex: Descarte irregular de lixo na rua" />
+          </div>
+          <div class="form-group">
+            <label for="action-category">Tipo de Problema</label>
+            <select id="action-category" class="form-control">
+              <option value="">Selecione uma categoria</option>
+              <option value="Poluição">Poluição do Ar/Água</option>
+              <option value="Desmatamento">Desmatamento</option>
+              <option value="Descarte">Descarte Inadequado de Resíduos</option>
+              <option value="Fauna">Problemas com a Fauna</option>
+              <option value="Energia/Água">Falta de Energia/Água</option>
+              <option value="Incendio">Incendio</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="action-description">Descrição do Ticket</label>
+            <textarea id="action-description" class="form-control"
+              placeholder="Descreva detalhadamente o problema ambiental..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="action-location">CEP (opcional)</label>
+            <input type="text" id="action-locationCEP" maxlength="9" class="form-control"
+              placeholder="Informe o CEP da localização" oninput="mascararCEP(this)"
+              onkeypress="handleKeyPress(event)" />
+          </div>
+          <div class="form-group">
+            <label for="action-location">Localização (opcional)</label>
+            <input type="text" id="action-location" class="form-control"
+              placeholder="Onde o problema ocorre? Cidade, Estado, Rua" />
+            <button type="button" onclick="obterLocalizacao()">Usar minha localização</button>
+          </div>
+          <div class="form-group">
+            <label for="action-image">Imagem (URL) (opcional)</label>
+            <input type="text" id="action-image" class="form-control"
+              placeholder="Cole a URL de uma imagem relacionada" />
+          </div>
+          <div class="form-group">
+            <label for="action-image-file">Imagem (Anexo) (opcional)</label>
+            <input type="file" id="action-image-file" class="form-control" accept="image/*" />
+          </div>
+
+          <button type="submit" class="btn" aria-label="Compartilhar Ticket">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="community-section" id="community">
+    <div class="container">
+      <h2 class="section-title">Ocorrencias Reportadas</h2>
+      <div class="posts-grid" id="posts-container">
+        <!-- As postagens serão inseridas aqui via JavaScript -->
+      </div>
+    </div>
+
+    <!--<button onclick="clearAllPosts()" style="margin: 10px; padding: 5px 10px;">Limpar Todas as Postagens</button>-->
+
+  </section>
+
+  <footer id="about">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>E-Connect</h3>
+          <p>
+            Uma plataforma para registrar, acompanhar e incentivar soluções
+            ambientais que fazem a diferença no nosso planeta.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Links Rápidos</h3>
+          <ul class="footer-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#features">Como Funciona</a></li>
+            <li>
+              <a href="#share">Reporte Problemas ou Sugestões Ambientais</a>
+            </li>
+            <li><a href="#community">Ocorrencias Reportadas</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contato</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-envelope"></i> contato@econnect.com.br</li>
+            <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+            <li><i class="fas fa-map-marker-alt"></i> Jundiai, SP/Brasil</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 E-Connect. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- chat -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <div id="gg-help-widget-root">
+
+    <button id="gg-help-button">
+      <img src="chat.png" alt="Abrir chat" />
     </button>
 
-    <!-- Popup do clima -->
-    <div id="weatherPopup" class="weather-popup">
-      <div class="weather-popup-content">
-        <span class="close-weather" id="closeWeather">×</span>
-        <h3>Previsão do Tempo</h3>
-        <div class="weather-content">
-          <!-- Widget do clima Elfsight dentro do popup -->
-          <script src="https://elfsightcdn.com/platform.js" async></script>
-          <div class="elfsight-app-2f6dc5b7-6fd6-4f66-b948-b0dd462dee70" data-elfsight-app-lazy></div>
-        </div>
+    <div id="gg-help-chat">
+      <div id="gg-help-header">
+        Caquinho
+        <button class="gg-help-close" id="gg-help-minimize-btn">—</button>
+      </div>
+      <div id="gg-help-body">
+        <div class="gg-help-msg-bot"><strong>Olá, meu nome é Caquinho! Sou seu assistente virtual especializado em
+            questões ambientais, como posso te ajudar?</strong></div>
+      </div>
+      <div id="gg-help-footer">
+        <input type="text" id="gg-help-input" placeholder="Digite sua mensagem..." />
+        <button id="gg-help-send">Enviar</button>
       </div>
     </div>
 
-    <section class="user-input-section" id="share">
-      <div class="container">
-        <h2 class="section-title">Reporte Problemas ou Sugestões Ambientais</h2>
-        <div class="input-form">
-          <form id="sustainability-form">
-            <div class="form-group">
-              <label for="action-title">Abertura de Ticket Ambiental</label>
-              <input
-                type="text"
-                id="action-title"
-                class="form-control"
-                placeholder="Ex: Descarte irregular de lixo na rua"
-              />
-            </div>
-            <div class="form-group">
-              <label for="action-category">Tipo de Problema</label>
-              <select id="action-category" class="form-control">
-                <option value="">Selecione uma categoria</option>
-                <option value="Poluição">Poluição do Ar/Água</option>
-                <option value="Desmatamento">Desmatamento</option>
-                <option value="Descarte">Descarte Inadequado de Resíduos</option>
-                <option value="Fauna">Problemas com a Fauna</option>
-                <option value="Energia/Água">Falta de Energia/Água</option>
-                <option value="Incendio">Incendio</option>
-                <option value="outro">Outro</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="action-description">Descrição do Ticket</label>
-              <textarea
-                id="action-description"
-                class="form-control"
-                placeholder="Descreva detalhadamente o problema ambiental..."
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="action-location">CEP (opcional)</label>
-              <input
-                type="text"
-                id="action-locationCEP"
-                maxlength="9"
-                class="form-control"
-                placeholder="Informe o CEP da localização"
-                oninput="mascararCEP(this)"
-                onkeypress="handleKeyPress(event)"
-              />
-            </div>
-            <div class="form-group">
-              <label for="action-location">Localização (opcional)</label>
-              <input
-                type="text"
-                id="action-location"
-                class="form-control"
-                placeholder="Onde o problema ocorre? Cidade, Estado, Rua"
-              />
-              <button type="button" onclick="obterLocalizacao()">Usar minha localização</button>
-            </div>
-            <div class="form-group">
-              <label for="action-image">Imagem (URL) (opcional)</label>
-              <input
-                type="text"
-                id="action-image"
-                class="form-control"
-                placeholder="Cole a URL de uma imagem relacionada"
-              />
-            </div>
-             <div class="form-group">
-              <label for="action-image-file">Imagem (Anexo) (opcional)</label>
-              <input
-                type="file"
-                id="action-image-file"
-                class="form-control"
-                accept="image/*"
-              />
-            </div>
+  </div>
 
-            <button type="submit" class="btn" aria-label="Compartilhar Ticket">Enviar</button>
-          </form>
-        </div>
-      </div>
-    </section>
+<script src="site-chat.js"></script>
+</body>
 
-    <section class="community-section" id="community">
-      <div class="container">
-        <h2 class="section-title">Ocorrencias Reportadas</h2>
-        <div class="posts-grid" id="posts-container">
-          <!-- As postagens serão inseridas aqui via JavaScript -->
-        </div>
-      </div>
-
-     <!--<button onclick="clearAllPosts()" style="margin: 10px; padding: 5px 10px;">Limpar Todas as Postagens</button>-->
-
-    </section>
-
-    <footer id="about">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>E-Connect</h3>
-            <p>
-              Uma plataforma para registrar, acompanhar e incentivar soluções
-              ambientais que fazem a diferença no nosso planeta.
-            </p>
-          </div>
-          <div class="footer-section">
-            <h3>Links Rápidos</h3>
-            <ul class="footer-links">
-              <li><a href="#home">Início</a></li>
-              <li><a href="#features">Como Funciona</a></li>
-              <li>
-                <a href="#share">Reporte Problemas ou Sugestões Ambientais</a>
-              </li>
-              <li><a href="#community">Ocorrencias Reportadas</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Contato</h3>
-            <ul class="footer-links">
-              <li><i class="fas fa-envelope"></i> contato@econnect.com.br</li>
-              <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
-              <li><i class="fas fa-map-marker-alt"></i> Jundiai, SP/Brasil</li>
-            </ul>
-          </div>
-        </div>
-        <div class="copyright">
-          <p>&copy; 2025 E-Connect. Todos os direitos reservados.</p>
-        </div>
-      </div>
-    </footer>
-    <!-- parte do chat-->
-    <button
-      id="openChatBtn"
-      aria-label="Assitente"
-      data-tooltip="Clique para falar comigo!"
-      onclick="openChat()"
-    >
-      <img src="chat.png" alt="Ícone de chat" />
-    </button>
-
-    <div
-      id="chatModal"
-      role="dialog"
-      aria-labelledby="chatTitle"
-      aria-modal="true"
-    >
-      <div id="chatBox">
-        <button id="closeBtn" aria-label="Fechar chat" onclick="closeChat()">
-          ×
-        </button>
-        <h2 id="chatTitle">ChatBot</h2>
-
-        <div
-          id="typingIndicator"
-          style="display: none; margin-bottom: 10px"
-          aria-live="polite"
-        >
-          <span class="dot" aria-hidden="true"></span>
-          <span class="dot" aria-hidden="true"></span>
-          <span class="dot" aria-hidden="true"></span>
-          <span style="font-size: 12px; color: #666; margin-left: 5px"
-            >Digitando...</span
-          >
-        </div>
-
-        <div id="messages" role="log" aria-live="polite"></div>
-
-        <div id="input-area">
-          <input
-            type="text"
-            id="user-input"
-            placeholder="Digite sua mensagem..."
-            aria-label="Digite sua mensagem"
-          />
-          <button id="sendBtn" onclick="sendMessage()">Enviar</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="inactivityMessage" role="alert">
-      O chat será fechado automaticamente após 5 segundos de inatividade.
-    </div>
-    <script src="site-chat.js"></script>
-  </body>
 </html>
-
