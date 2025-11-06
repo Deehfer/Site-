@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biometric Login</title>
+    <link rel="stylesheet" href="biometric-login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <button id="biometricBtn" class="biometric-btn">
+                <span class="icon">🔒</span>
+                Login with Biometrics
+            </button>
+            <div id="cameraView" class="camera-container" style="display: none;">
+                <video id="videoElement" autoplay playsinline></video>
+                <button id="cancelBtn" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="biometric-login.js"></script>
+</body>
+</html>
