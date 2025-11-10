@@ -109,11 +109,22 @@ function renderPosts() {
 
   const currentPosts = getPosts();
 
-  currentPosts.forEach((post) => {
+  currentPosts.forEach((post, index) => {
     const postElement = document.createElement("div");
     postElement.className = "post-card";
+    
+    // Verificar se a imagem é Base64 ou URL
+    let imageStyle = '';
+    if (post.image && post.image.startsWith('data:image')) {
+      imageStyle = `background-image: url('${post.image}')`;
+    } else if (post.image) {
+      imageStyle = `background-image: url('${post.image}')`;
+    } else {
+      imageStyle = 'background-color: #f0f0f0;';
+    }
+    
     postElement.innerHTML = `
-      <div class="post-image" style="background-image: url('${post.image}')"></div>
+      <div class="post-image" style="${imageStyle}"></div>
       <div class="post-content">
         <h3>${post.title}</h3>
         <div class="post-meta">
@@ -122,12 +133,10 @@ function renderPosts() {
         </div>
         <p>${post.description}</p>
         <p><i class="fas fa-map-marker-alt"></i> ${post.location}</p>
-      </div>
-    `;
-    postsContainer.appendChild(postElement);
+      </div>`;
+        postsContainer.appendChild(postElement);
   });
 }
-
 // Função para mascarar CEP
 function mascararCEP(input) {
   let value = input.value.replace(/\D/g, '');
@@ -473,3 +482,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
