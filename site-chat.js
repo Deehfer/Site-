@@ -109,7 +109,7 @@ function renderPosts() {
 
   const currentPosts = getPosts();
 
-  currentPosts.forEach((post, index) => { 
+  currentPosts.forEach((post, index) => {
     const postElement = document.createElement("div");
     postElement.className = "post-card";
     
@@ -137,6 +137,7 @@ function renderPosts() {
         postsContainer.appendChild(postElement);
   });
 }
+
 // Função para mascarar CEP
 function mascararCEP(input) {
   let value = input.value.replace(/\D/g, '');
@@ -170,16 +171,20 @@ function setupFormListener() {
 
       let finalImageUrl = imageUrl;
 
-      // Processar imagem anexada
-      if (imageFile) {
+       if (imageFile) {
         try {
           // Converter imagem para Base64
           finalImageUrl = await fileToBase64(imageFile);
+          console.log("Imagem anexada convertida para Base64");
         } catch (error) {
           console.error('Erro ao processar imagem:', error);
           alert('Erro ao processar a imagem. Tente novamente.');
           return;
         }
+      } else {
+        // Se não há arquivo, usa a URL
+        finalImageUrl = imageUrl;
+        console.log("Usando URL da imagem:", imageUrl);
       }
 
       if (title && category && description) {
@@ -480,7 +485,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
 });
-
-
