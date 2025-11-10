@@ -109,7 +109,7 @@ function renderPosts() {
 
   const currentPosts = getPosts();
 
-  currentPosts.forEach((post, index) => {
+  currentPosts.forEach((post, index) => { 
     const postElement = document.createElement("div");
     postElement.className = "post-card";
     
@@ -482,4 +482,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
 
