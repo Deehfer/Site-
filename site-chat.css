@@ -301,9 +301,18 @@ textarea.form-control {
 }
 
 .post-image {
-  height: 200px;
+  min-height: 200px;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f8f9fa; 
+  border-bottom: 1px solid #e9ecef;
+}
+
+.post-image[style*="background-image"] {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
 }
 
 .post-content {
@@ -694,4 +703,5 @@ footer {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(100%); }
   }
+
 }
