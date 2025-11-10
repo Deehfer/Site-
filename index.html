@@ -39,34 +39,24 @@
   </header>
 
   <div id="loginPopup" class="popup-overlay" style="display: none;">
-    <div class="popup-content">
-      <span class="close-popup" onclick="closeLoginPopup()">×</span>
-      <h2>Login</h2>
-      <form id="login-form">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required />
-
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required />
-
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+  <div class="popup-content">
     <span class="close-popup" onclick="closeLoginPopup()">×</span>
     <h2>Login</h2>
-    <form id="login-form">
+    <form id="login-form-facial">
       <label for="ra">RA:</label>
       <input type="text" id="ra" name="ra" required />
-      <label for="action-image-file">Login com reconhecimento facial (obrigatorio)</label>
+      <label for="login-image-file">Login com reconhecimento facial (obrigatório)</label>
       <input
         type="file"
-        id="action-image-file"
+        id="login-image-file"
         class="form-control"
         accept="image/*"
+        required
       />
       <button type="submit">Entrar</button>
     </form>
   </div>
+</div>
 
 
   <section class="hero" id="home">
@@ -271,4 +261,5 @@
 
 
 </html>
+
 
