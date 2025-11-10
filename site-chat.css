@@ -108,7 +108,9 @@ nav {
 }
 
 .close-menu {
-  align-self: flex-start;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   background: transparent;
   border: none;
   font-size: 24px;
@@ -485,9 +487,9 @@ footer {
 
   .close-menu {
     display: block;
-    align-self: flex-start;
     margin-bottom: 10px;
   }
+  
   .nav-links li {
     margin: 1.5rem 0;
   }
@@ -700,3 +702,4 @@ footer {
     to { opacity: 0; transform: translateY(100%); }
   }
 }
+
