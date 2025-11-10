@@ -302,7 +302,7 @@ textarea.form-control {
 }
 
 .post-image {
-   min-height: 200px;
+  min-height: 200px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
