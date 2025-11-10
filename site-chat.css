@@ -294,6 +294,7 @@ textarea.form-control {
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s;
+  max-width: 100%;
 }
 
 .post-card:hover {
@@ -301,7 +302,7 @@ textarea.form-control {
 }
 
 .post-image {
-  min-height: 200px;
+   min-height: 200px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -703,5 +704,4 @@ footer {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(100%); }
   }
-
 }
