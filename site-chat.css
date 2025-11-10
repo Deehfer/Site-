@@ -108,6 +108,7 @@ nav {
 }
 
 .close-menu {
+  align-self: auto;
   position: absolute;
   top: 20px;
   right: 20px;
@@ -487,6 +488,7 @@ footer {
 
   .close-menu {
     display: block;
+    align-self: auto;
     margin-bottom: 10px;
   }
   
@@ -702,4 +704,5 @@ footer {
     to { opacity: 0; transform: translateY(100%); }
   }
 }
+
 
