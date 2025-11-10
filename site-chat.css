@@ -55,11 +55,6 @@ nav {
   align-items: center;
 }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-}
-
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
@@ -113,7 +108,7 @@ nav {
 }
 
 .close-menu {
-  align-self: auto;
+  align-self: flex-start;
   background: transparent;
   border: none;
   font-size: 24px;
@@ -490,7 +485,7 @@ footer {
 
   .close-menu {
     display: block;
-    align-self: auto;
+    align-self: flex-start;
     margin-bottom: 10px;
   }
   .nav-links li {
